@@ -1,0 +1,3 @@
+endpoint,email,password
+api/register/qa,eve.holt@reqres.in,pistol
+api/register/qa,teacher@reqres.in,sword

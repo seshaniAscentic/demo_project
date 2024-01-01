@@ -1,0 +1,888 @@
+{
+	"info": {
+		"_postman_id": "39a07eba-8d37-4249-8c59-592153eda390",
+		"name": "demoapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5397541"
+	},
+	"item": [
+		{
+			"name": "Positive Scenarios",
+			"item": [
+				{
+					"name": "Getuserlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TC1.1: Verify Status Code is 200 (OK)\r",
+									"pm.test(\"1 Status Code Should Be 200 (OK)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// TC1.2: Verify Presence of Content-Type Header\r",
+									"pm.test('2 Content-Type Header is Present', function () {\r",
+									"    pm.response.to.have.header('Content-Type');\r",
+									"})\r",
+									"\r",
+									"//TC1.3: Verify Email in Response Data Matches Expected Value\r",
+									"pm.test('3 Email in Response Data Matches Expected Value', function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var expectedEmail = \"michael.lawson@reqres.in\";\r",
+									"    pm.expect(jsonData.data[0].email).to.eql(expectedEmail);\r",
+									"})\r",
+									"\r",
+									"// TC1.4: Verify Request Authentication is Successful\r",
+									"pm.test('4 Request Authentication is Successful', function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data[0].authenticated).to.be.true;\r",
+									"})\r",
+									"\r",
+									"//TC1.5: Verify Presence of Content-Type Header\r",
+									"pm.test('5 Content-Type Header Should Be Present', function () {\r",
+									"    pm.response.to.have.header('Content-Type');\r",
+									"})\r",
+									"\r",
+									"// TC1.:6 Verify Page 2 Contains 6 Records\r",
+									"pm.test(\"7 Page 2 should have exactly 6 records\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var recordsOnPage2 = jsonData.data;\r",
+									"    pm.expect(recordsOnPage2).to.have.length(6);\r",
+									"});\r",
+									"\r",
+									"// TC 1.7 : Verify Response Time is Less Than 500ms\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"//TC 1.8 : verify first name\r",
+									"pm.test(\"verify first_name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data[0].first_name).to.eql(\"Michael\");\r",
+									"});\r",
+									"\r",
+									"//TC1.9 : Verify api response contain any data\r",
+									"pm.test(\"Ferguson text Found in API response\", function (){\r",
+									"pm.expect(pm.response.text()).to.include(\"Ferguson\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Contains a message property\", function() {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"environment to be qa\", function () {\r",
+									"    pm.expect(pm.environment.get(\"env\")).to.equal(\"qa\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log (\"this is a log\")\r",
+									"console.info (\"this is a info\")\r",
+									"console.warn (\"this is a warning\")\r",
+									"console.error (\"this is an error\")\r",
+									"\r",
+									"// Generate a current timestamp\r",
+									"var timestamp = new Date().toISOString();\r",
+									"\r",
+									"// Set the timestamp as a query parameter\r",
+									"//pm.request.url.addQueryParams({ key: 'timestamp', value: timestamp });\r",
+									"\r",
+									"// Get an environment variable\r",
+									"var environmentVar = pm.environment.get('name');\r",
+									"\r",
+									"//TC 1.10 : Verify setting global veriabled \r",
+									"pm.globals.set(\"Name\",\"Global\");\r",
+									"\r",
+									"//TC 1.11 : Verify setting collection variables \r",
+									"pm.collectionVariables.set(\"Name\",\"Collection\");\r",
+									"\r",
+									"//TC 1.12 : Verify setting Environment Varialble\r",
+									"pm.environment.set(\"Name\",\"Environment\");\r",
+									"\r",
+									"//TC 1.13 : Verify setting local variables\r",
+									"pm.variables.set(\"Name\",\"Local\");\r",
+									"\r",
+									"//TC 1.14 : Verify getting global Variable\r",
+									"pm.globals.get(\"Name\",\"Global\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseurl}}users?page=2",
+							"host": [
+								"{{baseurl}}users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						},
+						"description": "\nThis HTTP GET request is used to retrieve a list of users from the server. The request is sent to the endpoint `{{baseurl}}users?page=2`, where `page=2` indicates that the response should contain the users from the second page.\n\nThe last execution of this request returned a response with a status code of 200, indicating a successful request. The response body contains information about the users, including the page number, the number of users per page, the total number of users, the total number of pages, and an array of user objects.\n\nEach user object in the `data` array contains the following properties:\n- `id`: The unique identifier of the user.\n- `email`: The email address of the user.\n- `first_name`: The first name of the user.\n- `last_name`: The last name of the user.\n- `avatar`: The URL of the user's avatar image.\n\nAdditionally, the response includes a `support` object with the following properties:\n- `url`: The URL for support related to the API.\n- `text`: Additional text or information related to the support.\n\nPlease note that the response provided in the example may not contain actual user data as it is a placeholder. The actual response will include real user information.\n\nTo retrieve users from different pages, you can modify the `page` parameter in the request URL.\n\nPlease refer to the API documentation for more details on how to use this endpoint and the available query parameters.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TC2.1: Verify Status Code is 201 Created\r",
+									"pm.test(\"Status Code Should Be 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// TC2.2: Verify Response Body Contains \"created\"\r",
+									"pm.test(\"Response Body Should Contain the String 'created'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"created\");\r",
+									"});\r",
+									"\r",
+									"// TC2.3: Verify User Receives Validation Message for Missing First Name\r",
+									"pm.test(\"User should receive validation message for missing first name\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"first name is required\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message indicates missing required fields\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('message', 'Validation failed. Missing required fields.');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}users",
+							"host": [
+								"{{baseurl}}users"
+							]
+						},
+						"description": "\nThis API endpoint allows you to create a new user by sending an HTTP POST request to the `{{baseurl}}users` URL.\n\nTo create a new user, you need to provide the required information in the request body. The request should be sent with the `Content-Type` header set to `application/json`.\n\nThe request body should include the following parameters:\n\n- `id` (string): The unique identifier for the user.\n- `createdAt` (string): The timestamp indicating when the user was created.\n\nExample request body:\n```json\n{\n  \"id\": \"user123\",\n  \"createdAt\": \"2022-01-01T12:00:00Z\"\n}\n```\n\nUpon successful creation of the user, the API will return a response with a status code of 201 (Created). The response body will include the following information:\n\n- `id` (string): The unique identifier assigned to the newly created user.\n- `createdAt` (string): The timestamp indicating when the user was created.\n\nExample response body:\n```json\n{\n  \"id\": \"user123\",\n  \"createdAt\": \"2022-01-01T12:00:00Z\"\n}\n```\n\nPlease note that the values for `id` and `createdAt` in both the request and response examples are placeholders and should be replaced with actual values.\n\nIf you encounter any issues or have any questions, please contact the API support team.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check if the variable is set in the 'qa' environment\r",
+									"const env = pm.environment.get('Environment');\r",
+									"pm.test('Check Environment Variable', function() {\r",
+									"    pm.expect(env).to.equal('qa');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"//Set an environment variable\r",
+									"postman.setEnvironmentVariable(\"key\", \"value\");\r",
+									"\r",
+									"postman.setEnvironmentVariable(\"environment\",\"qa\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"thanushka\",\r\n   \"job\": \"engineer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}users/2",
+							"host": [
+								"{{baseurl}}users"
+							],
+							"path": [
+								"2"
+							]
+						},
+						"description": "This HTTP PUT request is used to update the information of a specific user. The request is sent to the endpoint `{{baseurl}}users/2`, where `2` is the ID of the user to be updated.\n\nThe request body should contain the updated information of the user. The response will have a status code of 200 if the update is successful.\n\nBased on the last execution, the response body includes the following properties:\n\n- `name`: The updated name of the user.\n- `job`: The updated job title of the user.\n- `updatedAt`: The timestamp indicating when the user's information was last updated.\n    \n\nPlease note that the actual values for `name`, `job`, and `updatedAt` will vary depending on the specific update made to the user.\n\nTo update a user's information, send a PUT request to `{{baseurl}}users/2` with the desired changes in the request body."
+					},
+					"response": []
+				},
+				{
+					"name": "PartiallyUpdateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// TC4.1: Verify Successful PATCH Request\r",
+									"pm.test(\"Successful PATCH Request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"first_name\":\"John\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}users/2",
+							"host": [
+								"{{baseurl}}users"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TC2.1: Verify Status Code is 201 Created\r",
+									"pm.test(\"Status Code Should Be 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}{{endpoint}}",
+							"host": [
+								"{{baseurl}}{{endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AuthorizationDemo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script\r",
+									"var token = \"YOUR_ACCESS_TOKEN\";\r",
+									"pm.request.headers.add({ key: 'Authorization', value: 'Bearer ' + token });\r",
+									"\r",
+									"\r",
+									"//Setting an Authorization Header:\r",
+									"var token = \"YOUR_ACCESS_TOKEN\";\r",
+									"pm.request.headers.add({ key: 'Authorization', value: 'Bearer ' + token });\r",
+									"\r",
+									"//Generating Random Data\r",
+									"var email = 'user' + Math.floor(Math.random() * 1000) + '@example.com';\r",
+									"pm.environment.set('randomEmail', email);\r",
+									"\r",
+									"//Setting Environment Variables:\r",
+									"pm.environment.set('apiBaseUrl', 'https://api.example.com');\r",
+									"\r",
+									"//Conditional Logic:\r",
+									"if (pm.environment.get('environment') === 'production') {\r",
+									"    pm.request.url.host = 'api.example.com';\r",
+									"} else {\r",
+									"    pm.request.url.host = 'staging.example.com';\r",
+									"}\r",
+									"\r",
+									"//Reading Data from CSV Files:\r",
+									"var data = pm.iterationData.get('data'); // Assuming 'data' is a column in your CSV\r",
+									"pm.environment.set('csvData', data);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TC32: Verify Authentication\r",
+									"pm.test(\"Verify Authentication is Successful\", function () {\r",
+									"    // Check if the response status code is 200 (or the expected status code for successful authentication)\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    // You can add more specific checks, e.g., checking for a specific response property\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.success).to.be.true; // Assuming the response contains a \"success\" property.\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}users?page=2",
+							"host": [
+								"{{baseurl}}users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TC32: Verify Authentication\r",
+									"pm.test(\"Verify Authentication is Successful\", function () {\r",
+									"    // Check if the response status code is 201 (the expected status code for successful authentication)\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3Mjc2NjAyOCwiZXhwIjoxNjc0NDk0MDI4fQ.kCak9sLJr74frSRVQp0_27BY4iBCgQSmoT3vQVWKzJg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"email\": \"john@mail.com\",\r\n    \"password\": \"changeme\"\r\n}\r\n   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ViewProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMDY0ODM4NywiZXhwIjoxNzAyMzc2Mzg3fQ.vFEWsm83OQzBBRMpPlkIJV3TbzqCFuY-SUxTaud--w0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/auth/profile",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Scenarios",
+			"item": [
+				{
+					"name": "getuserlist invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    // TC1.1: Verify Status Code is 404\r",
+									"    pm.test(\"1 Status Code Should Be 404\", function () {\r",
+									"        pm.response.to.have.status(404);\r",
+									"    });\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log (\"this is a log\")\r",
+									"console.info (\"this is a info\")\r",
+									"console.warn (\"this is a warning\")\r",
+									"console.error (\"this is an error\")\r",
+									"\r",
+									"// Generate a current timestamp\r",
+									"var timestamp = new Date().toISOString();\r",
+									"\r",
+									"// Set the timestamp as a query parameter\r",
+									"//pm.request.url.addQueryParams({ key: 'timestamp', value: timestamp });\r",
+									"\r",
+									"// Get an environment variable\r",
+									"var environmentVar = pm.environment.get('name');\r",
+									"\r",
+									"//TC 1.10 : Verify setting global veriabled \r",
+									"pm.globals.set(\"Name\",\"Global\");\r",
+									"\r",
+									"//TC 1.11 : Verify setting collection variables \r",
+									"pm.collectionVariables.set(\"Name\",\"Collection\");\r",
+									"\r",
+									"//TC 1.12 : Verify setting Environment Varialble\r",
+									"pm.environment.set(\"Name\",\"Environment\");\r",
+									"\r",
+									"//TC 1.13 : Verify setting local variables\r",
+									"pm.variables.set(\"Name\",\"Local\");\r",
+									"\r",
+									"//TC 1.14 : Verify getting global Variable\r",
+									"pm.globals.get(\"Name\",\"Global\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/auth/profile/1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUser without mandatory fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TC2.1: Verify Status Code is 201 Created\r",
+									"pm.test(\"Status Code Should Be 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// TC2.2: Verify Response Body Contains \"created\"\r",
+									"pm.test(\"Response Body Should Contain the String 'created'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"created\");\r",
+									"});\r",
+									"   \r",
+									"// TC2.3: Verify User Receives Validation Message for Missing First Name\r",
+									"pm.test(\"User should receive validation message for missing first name\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"first name is required\");\r",
+									"});\r",
+									"\r",
+									"// Set the endpoint and base URL\r",
+									"const endpoint = '/users';\r",
+									"const baseUrl = 'https://reqres.in/api/users';\r",
+									"\r",
+									"// Test data for create with missing fields\r",
+									"const createUser = {\r",
+									"    // Omitting the 'name' field intentionally to test missing required field scenario\r",
+									"    \"job\": \"qa engineer\",\r",
+									"};\r",
+									"\r",
+									"// Make the API request\r",
+									"pm.sendRequest({\r",
+									"    url: `${baseUrl}${endpoint}`,\r",
+									"    method: 'POST',\r",
+									"    header: 'Content-Type:application/json',\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(createUser)\r",
+									"    }\r",
+									"}, function (err, res) {\r",
+									"    // Callback function to handle the response\r",
+									"    if (err) {\r",
+									"        console.error(err);\r",
+									"        return;\r",
+									"    }\r",
+									"\r",
+									"    // Verify the expected behavior\r",
+									"    pm.test('Status code is 400 for missing required fields', function () {\r",
+									"        pm.response.to.have.status(400);\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Error message indicates missing required fields\", function () {\r",
+									"        pm.expect(pm.response.json()).to.have.property('message', 'Validation failed. Missing required fields.');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"\",\r\n    \"job\": \"qa engineer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}users",
+							"host": [
+								"{{baseurl}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login authorized access",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "e+yJhbGciOiJIUzI1djfdsfffffffffffffffffffffffffffffffffffffffffffdcNiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMDEyNDkwOSwiZXhwIjoxNzAwMTYwOTA5fQ.L11eaDIAufWOvYWOulYGiqUhooaU_wFOWPLDzLTJKKk+",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"john@mail.com\",\r\n  \"password\": \"changeme\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser invalid Json",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}{{endpoint}}",
+							"host": [
+								"{{baseurl}}{{endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access profile without proper authentication",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMDAzNjQ1NCwiZXhwIjoxNzAxNzY0NDU0fQ.Pi6S0aVIPmZcRvaccs0Cn0iX7MTvW26bQ9sfGJn1r3w3333333333333333333",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/auth/profile",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "digest",
+		"digest": [
+			{
+				"key": "algorithm",
+				"value": "MD5",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "https://reqres.in/api/",
+			"type": "string"
+		},
+		{
+			"key": "Name",
+			"value": ""
+		}
+	]
+}

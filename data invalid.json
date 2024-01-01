@@ -1,0 +1,12 @@
+[
+   {
+      "endpoint":"api/register/qa",
+      "email":"eve.holt@reqres.in",
+      "password":"pistol"
+   },
+   {
+      "endpoint":"api/register/qa",
+      "email":"seshani@reqres.in",
+      "password":"pistol"
+   }
+]
